@@ -1,5 +1,5 @@
 # Aseprite-PillowShading
-Allows you to pillow shade a selection from the foreground colour to the background colour
+Allows you to pillow shade a selection from the foreground colour to the background colour.
 
 ## How to use it
 Simply make a selection, select a foreground colour and a background coluor and run the script.
