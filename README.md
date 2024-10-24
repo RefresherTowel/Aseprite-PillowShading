@@ -16,8 +16,8 @@ Simply make a selection, select a foreground colour and a background colour and 
     * This will perform the pillow shading by shrinking the current selection. The selected area will be set to the foreground colour, and then the selection will be progressively contracted, filling in with intermediary shades towards the background colour.
   * Expand
     * This will perform the pillow shading by expanding the current selection. The selected area will be filled with the background colour, and then the selection will be progressively expanded, with each expanded area being filled with intermediary shades towards the foreground colour.
-  * Interpolate in
-    * The four checkmarks (H, S, V and A) correspond to the Hue, Value, Saturation and Alpha of the interpolation between the foreground and background colours. Turning them off will disable interpolation for that field (meaning if you turn off Hue, for instance, and then pillow shade between red and blue colours, the interpolated colour will maintain the red hue of the foreground colour, while the saturation, value and alpha will interpolate between the foreground and background colours).
+* Interpolate in
+  * The four checkmarks (H, S, V and A) correspond to the Hue, Value, Saturation and Alpha of the interpolation between the foreground and background colours. Turning them off will disable interpolation for that field (meaning if you turn off Hue, for instance, and then pillow shade between red and blue colours, the interpolated colour will maintain the red hue of the foreground colour, while the saturation, value and alpha will interpolate between the foreground and background colours).
 
 ## How it works
 The script takes the current selection and determines how many contractions of the selection it will take until the selection is empty. It then fills the selection, starting from the foreground colour and interlopating towards the background colour in over however many iterations you selected.
