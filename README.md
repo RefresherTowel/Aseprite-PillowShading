@@ -31,10 +31,14 @@ Base Image
 
 Heightmap generated from the script (with a black background layer)
 
-![Heightmap ship image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_height3.png)
+![Heightmap ship image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_pillow_shaded.png)
 
 After using the base image and the heightmap image to generate a normal map
 
-![Normal mapped image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_normalised.png)
+![Normal mapped image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_normalised-1.png)
 
-Obviously, it doesn't do _all_ the work for you, you'll still have to do some manual editing to flatten out parts and adjust things as needed, but it speeds up the process considerably.
+The process
+
+![Pillow shading process](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/aseprite_pillow_shader-1.gif)
+
+Obviously, it doesn't do _all_ the work for you, you'll still have to do some manual editing to flatten out parts that don't fit with the pillow shading coming in from the edge of the sprite, but it speeds up the process considerably.
