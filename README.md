@@ -27,7 +27,7 @@ Whilst pillow shading isn't considered a great look for pixel art, it can be use
 
 Base Image
 
-![Flat ship image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_diffuse.png)
+![Flat ship image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_diffuse-1.png)
 
 Heightmap generated from the script (with a black background layer)
 
