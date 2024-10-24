@@ -1,6 +1,6 @@
 local sprite = app.site.sprite
 if sprite.selection.isEmpty then
-	return app.alert("Selection empty!")
+	return app.alert("I cannot process an empty selection!")
 end
 
 local data
@@ -17,7 +17,7 @@ dlg:radio { id="selection_circle", label = "Selection settings", text = "Circle"
 	end
 } 
 dlg:newrow()
-dlg:radio { id="selection_rectangle", label = "", text = "Rectangle", selected = false,
+dlg:radio { id="selection_rectangle", label = "", text = "Square", selected = false,
 	onclick = function()
 		dlg:modify {
 			id = "selection_circle",
@@ -49,14 +49,18 @@ dlg:button{ id="cancel", text="Cancel" }
 dlg:show()
 data = dlg.data
 if data.confirm then
+	if (data.iteration_size < 1) then
+		app.alert("I cannot process an iteration size that is not a positive number, so iteration size has been set to 1!")
+		data.iteration_size = 1
+	end
 	local iterations = 0
 	local brush_type = "circle"
-	local size_change = dlg.data.iteration_size
-	local max_iterations = dlg.data.max_iterations
-	if dlg.data.selection_rectangle == true then
+	local size_change = data.iteration_size
+	local max_iterations = data.max_iterations
+	if data.selection_rectangle == true then
 		brush_type = "square"
 	end
-	if dlg.data.contract == true then
+	if data.contract == true then
 		while (not sprite.selection.isEmpty) do
 			if (max_iterations > 0 and iterations > max_iterations) then
 				break
@@ -96,7 +100,7 @@ if data.confirm then
 	end
 	
 	local current_iteration = 0
-	if dlg.data.contract == true then
+	if data.contract == true then
 		while (not sprite.selection.isEmpty) do
 			if (max_iterations > 0 and current_iteration > max_iterations) then
 				break
