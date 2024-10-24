@@ -2,7 +2,7 @@
 Allows you to pillow shade a selection from the foreground colour to the background colour.
 
 ## How to use it
-Simply make a selection, select a foreground colour and a background colorr and run the script. The dialog options are:
+Simply make a selection, select a foreground colour and a background colour and run the script. The dialog options are:
 * Max Iterations
   * Sets a limit to the number of iterations will be filled. For example, a maximum of 5 iterations means that the pillow shading will have 5 shades between your foreground and background colour, each shade will be separated by the iteration size you pick. 0 means that it will either expand or shrink to the maximum amount of iterations that are possible with the size of the selection.
 * Iteration size
