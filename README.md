@@ -38,3 +38,5 @@ After using the base image and the heightmap image to generate a normal map
 ![Normal mapped image](https://refreshertowelgames.wordpress.com/wp-content/uploads/2024/10/ship_normalised-1.png)
 
 Obviously, it doesn't do _all_ the work for you, you'll still have to do some manual editing to flatten out parts that don't fit with the pillow shading coming in from the edge of the sprite, but it speeds up the process considerably.
+
+(If this little script is helpful, and you wanna pay it back, consider wishlisting my game: [Dice Trek](https://store.steampowered.com/app/3156360?utm_source=pillow_shading_readme&utm_medium=github) (you're the captain of a starship where everyone on the bridge has to roll dice to perform their duties).
