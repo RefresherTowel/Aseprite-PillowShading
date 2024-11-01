@@ -3,22 +3,22 @@ Allows you to pillow shade a selection from the foreground colour to the backgro
 
 ## How to use it
 Simply make a selection, select a foreground colour and a background colour and run the script. The dialog options are:
-* Max Iterations
+* **Max Iterations**
   * Sets a limit to the number of iterations will be filled. For example, a maximum of 5 iterations means that the pillow shading will have 5 shades between your foreground and background colour, each shade will be separated by the iteration size you pick. 0 means that it will either expand or shrink to the maximum amount of iterations that are possible with the size of the selection.
-* Iteration size
+* **Iteration size**
   * Determines how far apart in pixels each interpolated shade will be. A value of 3 would mean that the selection expands or contracts by 3 pixels before the next intermediary shade is applied.
-* Selection settings
-  * Circle
+* **Selection settings**
+  * _Circle_
     * This will perform the selection contraction or expansion using a circular brush.
-  * Square
+  * _Square_
     * This will perform the selection contraction or expansion using a square brush.
-  * Shrink
+  * _Shrink_
     * This will perform the pillow shading by shrinking the current selection. The selected area will be set to the foreground colour, and then the selection will be progressively contracted, filling in with intermediary shades towards the background colour.
-  * Expand
+  * _Expand_
     * This will perform the pillow shading by expanding the current selection. The selected area will be filled with the background colour, and then the selection will be progressively expanded, with each expanded area being filled with intermediary shades towards the foreground colour.
-  * Act as heightmap
-    * This will force the pillow shading to act as a heightmap. It will disable the other interpolation options (HSVA), and force the foreground and background colours into greyscale. It also ensures a minimum interpolation between each iteration, to smooth the image as much as possible (without this, normal maps generated from the heightmap can often have unwanted flat sections when attempting to interpret a smoothly rounded surface of shallow height). There may be situations in which you want to generate a heightmap without this forced interpolation minimum, in which case you should manually select the grey colours you want to interpolate between and toggle this off.
-* Interpolate in
+* **Act as heightmap**
+ * This will force the pillow shading to act as a heightmap. It will disable the other interpolation options (HSVA), and force the foreground and background colours into greyscale. It also ensures a minimum interpolation between each iteration, to smooth the image as much as possible (without this, normal maps generated from the heightmap can often have unwanted flat sections when attempting to interpret a smoothly rounded surface of shallow height). There may be situations in which you want to generate a heightmap without this forced interpolation minimum, in which case you should manually select the grey colours you want to interpolate between and toggle this off.
+* **Interpolate in**
   * The four checkmarks (H, S, V and A) correspond to the Hue, Value, Saturation and Alpha of the interpolation between the foreground and background colours. Turning them off will disable interpolation for that field (meaning if you turn off Hue, for instance, and then pillow shade between red and blue colours, the interpolated colour will maintain the red hue of the foreground colour, while the saturation, value and alpha will interpolate between the foreground and background colours).
 
 ## How it works
