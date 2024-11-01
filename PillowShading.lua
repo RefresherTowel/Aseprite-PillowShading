@@ -45,12 +45,52 @@ dlg:radio { id="expand", label="", text="Expand", selected = false,
 	end
 }
 dlg:newrow()
-dlg:check { id="hue_interp", label = "Interpolate in (Hue, Sat, Val, Alpha)", text = "h", selected = true }
-dlg:check { id="sat_interp", text = "s", selected = true }
-dlg:check { id="val_interp", text = "v", selected = true }
-dlg:check { id="alpha_interp", text = "a", selected = true }
+dlg:check { id="force_grayscale", label="Act as heightmap", selected = false, 
+	onclick = function()
+		if not dlg.data.force_grayscale then
+			dlg:modify {
+				id = "hue_interp",
+				selected = true
+			}
+			dlg:modify {
+				id = "sat_interp",
+				selected = true
+			}
+			dlg:modify {
+				id = "val_interp",
+				selected = true
+			}
+			dlg:modify {
+				id = "alpha_interp",
+				selected = true
+			}
+		else
+			dlg:modify {
+				id = "hue_interp",
+				selected = false
+			}
+			dlg:modify {
+				id = "sat_interp",
+				selected = false
+			}
+			dlg:modify {
+				id = "val_interp",
+				selected = false
+			}
+			dlg:modify {
+				id = "alpha_interp",
+				selected = false
+			}
+		end
+	end
+}
 dlg:newrow()
-dlg:button { id="confirm", text="Confirm" }
+dlg:check { id="hue_interp", label = "Interpolate in (Hue, Sat, Val, Alpha)", text = "h", selected = true, last_selection = true }
+dlg:check { id="sat_interp", text = "s", selected = true, last_selection = true }
+dlg:check { id="val_interp", text = "v", selected = true, last_selection = true }
+dlg:check { id="alpha_interp", text = "a", selected = true, last_selection = true }
+dlg:newrow()
+dlg:button { id="confirm", text="Confirm", focus = true }
 dlg:button { id="cancel", text="Cancel" }
 dlg:show()
 data = dlg.data
@@ -95,23 +135,68 @@ if data.confirm then
 		
 	
 	local start_col = app.fgColor
+	local return_start_col = start_col
 	local end_col = app.bgColor
+	local return_end_col = end_col
 	local iter = iterations - 1
 	local h_inc = 0
 	local s_inc = 0
 	local v_inc = 0
 	local a_inc = 0
-	if (data.hue_interp) then
-		h_inc = ((end_col.hue - start_col.hue) / iter)
-	end
-	if (data.sat_interp) then
-		s_inc = ((end_col.saturation - start_col.saturation) / iter)
-	end
-	if (data.val_interp) then
-		v_inc = ((end_col.value - start_col.value) / iter)
-	end
-	if (data.alpha_interp) then
-		a_inc = ((end_col.alpha - start_col.alpha) / iter)
+	local r_inc = 0
+	local g_inc = 0
+	local b_inc = 0
+	local greyscale = data.force_grayscale
+	if not greyscale then
+		if (data.hue_interp) then
+			h_inc = ((end_col.hue - start_col.hue) / iter)
+		end
+		if (data.sat_interp) then
+			s_inc = ((end_col.saturation - start_col.saturation) / iter)
+		end
+		if (data.val_interp) then
+			v_inc = ((end_col.value - start_col.value) / iter)
+		end
+		if (data.alpha_interp) then
+			a_inc = ((end_col.alpha - start_col.alpha) / iter)
+		end
+	else
+		local new_start = Color {
+			red = app.fgColor.gray,
+			green = app.fgColor.gray,
+			blue = app.fgColor.gray
+		}
+		start_col = new_start
+		app.fgColor = start_col
+
+		local new_end = Color {
+			red = app.bgColor.gray,
+			green = app.bgColor.gray,
+			blue = app.bgColor.gray,
+		}
+		end_col = new_end
+		app.bgColor = end_col
+
+		r_inc = ((end_col.red - start_col.red) /  iter)
+		if r_inc < 1 and r_inc > 0 then
+			r_inc = 1
+		elseif r_inc > -1 and r_inc < 0 then
+			r_inc = -1
+		end
+
+		g_inc = ((end_col.green - start_col.green) / iter)
+		if g_inc < 1 and g_inc > 0 then
+			g_inc = 1
+		elseif g_inc > -1 and g_inc < 0 then
+			g_inc = -1
+		end
+
+		b_inc = ((end_col.blue - start_col.blue) / iter)
+		if b_inc < 1 and b_inc > 0 then
+			b_inc = 1
+		elseif b_inc > -1 and b_inc < 0 then
+			b_inc = -1
+		end
 	end
 	
 	local undo_num = iterations;
@@ -127,12 +212,20 @@ if data.confirm then
 				break
 			end
 			app.command.Fill()
-			app.fgColor = Color {
-				hue 		= app.fgColor.hue + h_inc,
-				saturation 	= app.fgColor.saturation + s_inc,
-				value 		= app.fgColor.value + v_inc,
-				alpha 		= app.fgColor.alpha + a_inc
-			}
+			if not greyscale then
+				app.fgColor = Color {
+					hue 		= app.fgColor.hue + h_inc,
+					saturation 	= app.fgColor.saturation + s_inc,
+					value 		= app.fgColor.value + v_inc,
+					alpha 		= app.fgColor.alpha + a_inc
+				}
+			else
+				app.fgColor = Color {
+					r		= app.fgColor.red + r_inc,
+					g		= app.fgColor.green + g_inc,
+					b		= app.fgColor.blue + b_inc
+				}
+			end
 			app.command.ModifySelection {
 				modifier = "contract",
 				quantity = size_change,
@@ -152,12 +245,20 @@ if data.confirm then
 				break
 			end
 			app.command.Fill()
-			app.fgColor = Color {
-				hue 		= app.fgColor.hue + h_inc,
-				saturation 	= app.fgColor.saturation + s_inc,
-				value 		= app.fgColor.value + v_inc,
-				alpha 		= app.fgColor.alpha + a_inc
-			}
+			if not greyscale then
+				app.fgColor = Color {
+					hue 		= app.fgColor.hue + h_inc,
+					saturation 	= app.fgColor.saturation + s_inc,
+					value 		= app.fgColor.value + v_inc,
+					alpha 		= app.fgColor.alpha + a_inc
+				}
+			else
+				app.fgColor = Color {
+					r		= app.fgColor.red + r_inc,
+					g		= app.fgColor.green + g_inc,
+					b		= app.fgColor.blue + b_inc
+				}
+			end
 			app.command.ModifySelection {
 				modifier = "contract",
 				quantity = size_change,
@@ -166,6 +267,6 @@ if data.confirm then
 			current_iteration = current_iteration + 1
 		end
 	end
-	app.fgColor = start_col
-	app.bgColor = end_col
+	app.fgColor = return_start_col
+	app.bgColor = return_end_col
 end
